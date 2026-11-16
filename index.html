@@ -155,7 +155,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebas
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 // === FIREBASE BARU - PASTE CONFIG PROJECT BARU LO DI SINI ===
-const firebaseConfig = { apiKey: "PASTE_DI_SINI", authDomain: "PASTE_DI_SINI", projectId: "PASTE_DI_SINI", storageBucket: "PASTE_DI_SINI", messagingSenderId: "PASTE_DI_SINI", appId: "PASTE_DI_SINI" };
+const firebaseConfig = {
+  apiKey: "AIzaSyBILmaxwL9H3BpKymWZon46T0bzYPDctGc",
+  authDomain: "budget-50k.firebaseapp.com",
+  projectId: "budget-50k",
+  storageBucket: "budget-50k.firebasestorage.app",
+  messagingSenderId: "690774780637",
+  appId: "1:690774780637:web:f6d254ac6d539e25ed8934"
+};
 const app = initializeApp(firebaseConfig); const auth = getAuth(app); const db = getFirestore(app);
 const CATS = [
   { name:'Makan', color:'#f59e0b', pct:40 },
@@ -253,7 +260,7 @@ document.getElementById('btnAddTx').addEventListener('click',()=>{
 document.getElementById('txDate').value=new Date().toISOString().slice(0,10);
 function startListener(){
   const ref=doc(db,"budget","bulanan-fresh"); if(unsub) unsub();
-  unsub=onSnapshot(ref,(snap)=>{ const data=snap.exists()?snap.data():{}; if(data.gaji!==undefined) state.gaji=data.gaji; if(data.lain!==undefined) state.lain=data.lain; if(data.allocs) state.allocs=data.allocs; if(data.txs) state.txs=data.txs; document.getElementById('inGaji').value=state.gaji; document.getElementById('inLain').value=state.lain; const ok='Tersambung ke Firebase ✓'; ['connA','connV','loginConn'].forEach(id=>{ const el=document.getElementById(id); el.innerText=ok; el.className='conn ok'; }); renderAll(); },(err)=>{ document.getElementById('loginConn').innerText='Gagal: '+err.message; });
+  unsub=onSnapshot(ref,(snap)=>{ const data=snap.exists()?snap.data():{}; if(data.gaji!==undefined) state.gaji=data.gaji; if(data.lain!==undefined) state.lain=data.lain; if(data.allocs) state.allocs=data.allocs; if(data.txs) state.txs=data.txs; document.getElementById('inGaji').value=state.gaji; document.getElementById('inLain').value=state.lain; const ok='Tersambung ke Firebase - budget-50k ✓'; ['connA','connV','loginConn'].forEach(id=>{ const el=document.getElementById(id); el.innerText=ok; el.className='conn ok'; }); renderAll(); },(err)=>{ document.getElementById('loginConn').innerText='Gagal: '+err.message; });
 }
 document.getElementById('btnLogin').addEventListener('click', async ()=>{ const email=document.getElementById('email').value.trim(); const pass=document.getElementById('pass').value; try{ await signInWithEmailAndPassword(auth,email,pass); }catch(e){ document.getElementById('loginMsg').innerHTML='<div style="background:#ffe4e6;color:#9f1239;padding:12px;border-radius:12px;font-size:13px;margin-top:12px">'+e.message+'</div>'; } });
 document.getElementById('btnLogoutA').addEventListener('click', async ()=>{ await signOut(auth); });
